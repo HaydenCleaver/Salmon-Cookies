@@ -9,27 +9,26 @@ const seattle = {
   avgSale : 6.3,
   storeHours : 14,
   storeSales : [],
-  allSales : [],
 
-  randomCustomers : function(){
+  randomCustomers : function(){ //returns a random # of customers based upon min/max properties
     let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
     return customer;
   },
 
-  sales : function(){
-    let totalSales = [];
-    let allSales = 0;
+  sales : function(){ //multiplies # of customers * average sale amount and appends them to an array along with total sales made
+    let hourlySales = [];
+    let totalSales = 0;
 
     for (let i = 0; i < this.storeHours; i++) {
-      totalSales.push(Math.round(this.randomCustomers() * this.avgSale));
-      allSales += totalSales[i];
+      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
+      totalSales += hourlySales[i];
     }
 
-    totalSales.push(allSales);
-    return this.storeSales = totalSales;
+    hourlySales.push(totalSales);
+    return this.storeSales = hourlySales;
   },
 
-  page : function (){
+  page : function (){ //creates a list element on the sales.html page for each entry in the storeSales array and prints the data to that list element
 
     let ulSeattle = document.getElementById('seattle');
 
@@ -60,15 +59,15 @@ const tokyo = {
   },
 
   sales : function(){
-    let totalSales = [];
-    let allSales = 0;
+    let hourlySales = [];
+    let totalSales = 0;
 
     for (let i = 0; i < this.storeHours; i++) {
-      totalSales.push(Math.round(this.randomCustomers() * this.avgSale));
-      allSales += totalSales[i];
+      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
+      totalSales += hourlySales[i];
     }
-    totalSales.push(allSales);
-    return this.storeSales = totalSales;
+    hourlySales.push(totalSales);
+    return this.storeSales = hourlySales;
   },
 
   page : function(){
@@ -102,15 +101,15 @@ const dubai = {
   },
 
   sales : function(){
-    let totalSales = [];
-    let allSales = 0;
+    let hourlySales = [];
+    let totalSales = 0;
 
     for (let i = 0; i < this.storeHours; i++) {
-      totalSales.push(Math.round(this.randomCustomers() * this.avgSale));
-      allSales += totalSales[i];
+      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
+      totalSales += hourlySales[i];
     }
-    totalSales.push(allSales);
-    return this.storeSales = totalSales;
+    hourlySales.push(totalSales);
+    return this.storeSales = hourlySales;
   },
 
   page : function(){
@@ -143,15 +142,15 @@ const paris = {
   },
 
   sales : function(){
-    let totalSales = [];
-    let allSales = 0;
+    let hourlySales = [];
+    let totalSales = 0;
 
     for (let i = 0; i < this.storeHours; i++) {
-      totalSales.push(Math.round(this.randomCustomers() * this.avgSale));
-      allSales += totalSales[i];
+      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
+      totalSales += hourlySales[i];
     }
-    totalSales.push(allSales);
-    return this.storeSales = totalSales;
+    hourlySales.push(totalSales);
+    return this.storeSales = hourlySales;
   },
 
   page : function(){
@@ -184,15 +183,15 @@ const lima = {
   },
 
   sales : function(){
-    let totalSales = [];
-    let allSales = 0;
+    let hourlySales = [];
+    let totalSales = 0;
 
     for (let i = 0; i < this.storeHours; i++) {
-      totalSales.push(Math.round(this.randomCustomers() * this.avgSale));
-      allSales += totalSales[i];
+      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
+      totalSales += hourlySales[i];
     }
-    totalSales.push(allSales);
-    return this.storeSales = totalSales;
+    hourlySales.push(totalSales);
+    return this.storeSales = hourlySales;
   },
 
   page : function(){
