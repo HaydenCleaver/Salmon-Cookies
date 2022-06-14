@@ -1,209 +1,115 @@
 'use strict';
 
-const storeTime = ['6am: ', '7am: ', '8am: ', '9am: ', '10am: ', '11am: ', '12pm: ', '1pm: ', '2pm: ', '3pm: ', '4pm: ', '5pm: ', '6pm: ', '7pm: ', 'Total: '];
+const saleTime = ['6am: ', '7am: ', '8am: ', '9am: ', '10am: ', '11am: ', '12pm: ', '1pm: ', '2pm: ', '3pm: ', '4pm: ', '5pm: ', '6pm: ', '7pm: ', 'Total: '];
+const storeHours = 14;
+const listedStores = [];
 
-const seattle = {
+function StoreCreator (location, minCust, maxCust, avgSale){ //creates store objects 
 
-  minCust : 23,
-  maxCust : 65,
-  avgSale : 6.3,
-  storeHours : 14,
-  storeSales : [],
+  this.location = location;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.avgSale = avgSale;
+  this.storeSales = [];
 
-  randomCustomers : function(){ //returns a random # of customers based upon min/max properties
+  this.randomCustomers = function(){ //returns a random # of customers based upon min/max properties
     let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
     return customer;
-  },
+  };
 
-  sales : function(){ //multiplies # of customers * average sale amount and appends them to an array along with total sales made
+  this.sales = function(){ //multiplies # of customers * average sale amount and appends them to an array along with total sales made
     let hourlySales = [];
     let totalSales = 0;
 
-    for (let i = 0; i < this.storeHours; i++) {
+    for (let i = 0; i < storeHours; i++) {
       hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
       totalSales += hourlySales[i];
     }
 
     hourlySales.push(totalSales);
     return this.storeSales = hourlySales;
-  },
+  };
+  listedStores.push(this);
+}
 
-  page : function (){ //creates a list element on the sales.html page for each entry in the storeSales array and prints the data to that list element
-
-    let ulSeattle = document.getElementById('seattle');
-
-    for (let i = 0; i < seattle.storeSales.length; i++){
-      let seattleList = document.createElement('li');
-      seattleList.textContent = `${storeTime[i]} ${seattle.storeSales[i]} cookies`;
-      ulSeattle.appendChild(seattleList);
-    }
-  },
-};
-
+let seattle = new StoreCreator('Seattle', 23, 65, 6.3);
 seattle.sales();
-seattle.page();
+console.log(seattle.storeSales);
 
-//-----------------------------------//
-
-const tokyo = {
-
-  minCust : 3,
-  maxCust : 24,
-  avgSale : 1.2,
-  storeHours : 14,
-  storeSales : [],
-
-  randomCustomers : function(){
-    let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
-    return customer;
-  },
-
-  sales : function(){
-    let hourlySales = [];
-    let totalSales = 0;
-
-    for (let i = 0; i < this.storeHours; i++) {
-      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
-      totalSales += hourlySales[i];
-    }
-    hourlySales.push(totalSales);
-    return this.storeSales = hourlySales;
-  },
-
-  page : function(){
-
-    let ulTokyo = document.getElementById('tokyo');
-
-    for (let i = 0; i < tokyo.storeSales.length; i++){
-      let tokyoList = document.createElement('li');
-      tokyoList.textContent = `${storeTime[i]} ${tokyo.storeSales[i]} cookies`;
-      ulTokyo.appendChild(tokyoList);
-    }
-  },
-};
-
+let tokyo = new StoreCreator('Tokyo', 3, 24, 1.2);
 tokyo.sales();
-tokyo.page();
 
-//-----------------------------------//
-
-const dubai = {
-
-  minCust : 11,
-  maxCust : 38,
-  avgSale : 3.7,
-  storeHours : 14,
-  storeSales : [],
-
-  randomCustomers : function(){
-    let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
-    return customer;
-  },
-
-  sales : function(){
-    let hourlySales = [];
-    let totalSales = 0;
-
-    for (let i = 0; i < this.storeHours; i++) {
-      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
-      totalSales += hourlySales[i];
-    }
-    hourlySales.push(totalSales);
-    return this.storeSales = hourlySales;
-  },
-
-  page : function(){
-    let ulDubai = document.getElementById('dubai');
-
-    for (let i = 0; i < dubai.storeSales.length; i++){
-      let dubaiList = document.createElement('li');
-      dubaiList.textContent = `${storeTime[i]} ${dubai.storeSales[i]} cookies`;
-      ulDubai.appendChild(dubaiList);
-    }
-  },
-};
-
+let dubai = new StoreCreator('Dubai', 11, 38, 3.7);
 dubai.sales();
-dubai.page();
 
-//-----------------------------------//
-
-const paris = {
-
-  minCust : 20,
-  maxCust : 38,
-  avgSale : 2.3,
-  storeHours : 14,
-  storeSales : [],
-
-  randomCustomers : function(){
-    let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
-    return customer;
-  },
-
-  sales : function(){
-    let hourlySales = [];
-    let totalSales = 0;
-
-    for (let i = 0; i < this.storeHours; i++) {
-      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
-      totalSales += hourlySales[i];
-    }
-    hourlySales.push(totalSales);
-    return this.storeSales = hourlySales;
-  },
-
-  page : function(){
-    let ulParis = document.getElementById('paris');
-
-    for (let i = 0; i < paris.storeSales.length; i++){
-      let parisList = document.createElement('li');
-      parisList.textContent = `${storeTime[i]} ${paris.storeSales[i]} cookies`;
-      ulParis.appendChild(parisList);
-    }
-  },
-};
-
+let paris = new StoreCreator('Paris', 20, 38, 2.3);
 paris.sales();
-paris.page();
 
-//-----------------------------------//
-
-const lima = {
-
-  minCust : 2,
-  maxCust : 16,
-  avgSale : 4.6,
-  storeHours : 14,
-  storeSales : [],
-
-  randomCustomers : function(){
-    let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
-    return customer;
-  },
-
-  sales : function(){
-    let hourlySales = [];
-    let totalSales = 0;
-
-    for (let i = 0; i < this.storeHours; i++) {
-      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
-      totalSales += hourlySales[i];
-    }
-    hourlySales.push(totalSales);
-    return this.storeSales = hourlySales;
-  },
-
-  page : function(){
-    let ulLima = document.getElementById('lima');
-
-    for (let i = 0; i < lima.storeSales.length; i++){
-      let limaList = document.createElement('li');
-      limaList.textContent = `${storeTime[i]} ${lima.storeSales[i]} cookies`;
-      ulLima.appendChild(limaList);
-    }
-  },
-};
-
+let lima = new StoreCreator('Lima', 2, 16, 4.6);
 lima.sales();
-lima.page();
+
+function render(store){
+  let tableEl = document.getElementById('salesTable');
+  let tableRowEl = document.createElement('tr');
+  let locationEl = document.createElement('td');
+
+  tableEl.appendChild(tableRowEl);
+  tableRowEl.appendChild(locationEl);
+  locationEl.textContent = store.location;
+
+  for (let i = 0; i < store.storeSales.length; i++){
+    let saleEl = document.createElement('td');
+    tableRowEl.appendChild(saleEl);
+    saleEl.textContent = store.storeSales[i];
+  }
+}
+
+function header(){
+  let tableEl = document.getElementById('salesTable');
+  let tableRowEl = document.createElement('tr');
+  let blankEl = document.createElement('th');
+
+  tableEl.appendChild(tableRowEl);
+  tableRowEl.appendChild(blankEl);
+
+  for (let i = 0; i < storeHours; i++){
+    let hourEl = document.createElement('th');
+    tableRowEl.appendChild(hourEl);
+    hourEl.textContent = saleTime[i];
+  }
+
+  let finalEl = document.createElement('th');
+  tableRowEl.appendChild(finalEl);
+  finalEl.textContent = 'Daily Location Total';
+}
+
+function footer(){
+  let hourlyTotals = [];
+  let finalTotal = 0;
+
+  let tableEl = document.getElementById('salesTable');
+  let tableRowEl = document.createElement('tr');
+  let firstEl = document.createElement('th');
+
+  tableEl.appendChild(tableRowEl);
+  tableRowEl.appendChild(firstEl);
+  firstEl.textContent = 'Totals';
+
+  for (let i = 0; i < storeHours; i++){
+    hourlyTotals.push(seattle.storeSales[i] + tokyo.storeSales[i] + dubai.storeSales[i] + paris.storeSales[i] + lima.storeSales[i]);
+    console.log(hourlyTotals);
+    finalTotal += hourlyTotals;
+    console.log(finalTotal);
+  }
+
+}
+
+header();
+
+render(seattle);
+render(tokyo);
+render(dubai);
+render(paris);
+render(lima);
+
+footer();
