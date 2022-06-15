@@ -30,13 +30,12 @@ function StoreCreator (location, minCust, maxCust, avgSale){ //creates store obj
     this.total.push(totalSales);
     return this.storeSales = hourlySales;
   };
-  listedStores.push(this);
+
+  listedStores.push(this); //appends objects created into listedStore array, which is used in footer() function for calculating totals
 }
 
 let seattle = new StoreCreator('Seattle', 23, 65, 6.3);
 seattle.sales();
-console.log(seattle.storeSales);
-console.log(seattle.total);
 
 let tokyo = new StoreCreator('Tokyo', 3, 24, 1.2);
 tokyo.sales();
@@ -49,9 +48,6 @@ paris.sales();
 
 let lima = new StoreCreator('Lima', 2, 16, 4.6);
 lima.sales();
-
-console.log(listedStores);
-console.log(listedStores[0].storeSales[0]);
 
 function render(store){
   let tableEl = document.getElementById('salesTable');
