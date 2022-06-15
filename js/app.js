@@ -1,6 +1,6 @@
 'use strict';
 
-const saleTime = ['6am: ', '7am: ', '8am: ', '9am: ', '10am: ', '11am: ', '12pm: ', '1pm: ', '2pm: ', '3pm: ', '4pm: ', '5pm: ', '6pm: ', '7pm: ', 'Total: '];
+const saleTime = ['6am: ', '7am: ', '8am: ', '9am: ', '10am: ', '11am: ', '12pm: ', '1pm: ', '2pm: ', '3pm: ', '4pm: ', '5pm: ', '6pm: ', '7pm: '];
 const storeHours = 14;
 const listedStores = [];
 
@@ -11,6 +11,7 @@ function StoreCreator (location, minCust, maxCust, avgSale){ //creates store obj
   this.maxCust = maxCust;
   this.avgSale = avgSale;
   this.storeSales = [];
+  this.total = [];
 
   this.randomCustomers = function(){ //returns a random # of customers based upon min/max properties
     let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
@@ -26,7 +27,7 @@ function StoreCreator (location, minCust, maxCust, avgSale){ //creates store obj
       totalSales += hourlySales[i];
     }
 
-    hourlySales.push(totalSales);
+    this.total.push(totalSales);
     return this.storeSales = hourlySales;
   };
   listedStores.push(this);
@@ -35,6 +36,7 @@ function StoreCreator (location, minCust, maxCust, avgSale){ //creates store obj
 let seattle = new StoreCreator('Seattle', 23, 65, 6.3);
 seattle.sales();
 console.log(seattle.storeSales);
+console.log(seattle.total);
 
 let tokyo = new StoreCreator('Tokyo', 3, 24, 1.2);
 tokyo.sales();
@@ -47,6 +49,9 @@ paris.sales();
 
 let lima = new StoreCreator('Lima', 2, 16, 4.6);
 lima.sales();
+
+console.log(listedStores);
+console.log(listedStores[0].storeSales[0]);
 
 function render(store){
   let tableEl = document.getElementById('salesTable');
@@ -62,6 +67,10 @@ function render(store){
     tableRowEl.appendChild(saleEl);
     saleEl.textContent = store.storeSales[i];
   }
+
+  let finalEl = document.createElement('td');
+  tableRowEl.appendChild(finalEl);
+  finalEl.textContent = store.total;
 }
 
 function header(){
@@ -84,8 +93,8 @@ function header(){
 }
 
 function footer(){
-  let hourlyTotals = [];
-  let finalTotal = 0;
+  let hourlyTotals = 0;
+  let finalTotals = 0;
 
   let tableEl = document.getElementById('salesTable');
   let tableRowEl = document.createElement('tr');
@@ -95,13 +104,24 @@ function footer(){
   tableRowEl.appendChild(firstEl);
   firstEl.textContent = 'Totals';
 
-  for (let i = 0; i < storeHours; i++){
-    hourlyTotals.push(seattle.storeSales[i] + tokyo.storeSales[i] + dubai.storeSales[i] + paris.storeSales[i] + lima.storeSales[i]);
-    console.log(hourlyTotals);
-    finalTotal += hourlyTotals;
-    console.log(finalTotal);
+  for (let n = 0; n < storeHours; n++){
+    for (let i = 0; i < listedStores.length; i++){
+      hourlyTotals += parseInt(listedStores[i].storeSales[n]);
+    }
+
+    let hourEl = document.createElement('th');
+    tableRowEl.appendChild(hourEl);
+    hourEl.textContent = hourlyTotals;
+    hourlyTotals = 0;
   }
 
+  for (let i = 0; i < listedStores.length; i++){
+    finalTotals += parseInt(listedStores[i].total);
+  }
+
+  let finalEl = document.createElement('th');
+  tableRowEl.appendChild(finalEl);
+  finalEl.textContent = finalTotals;
 }
 
 header();
