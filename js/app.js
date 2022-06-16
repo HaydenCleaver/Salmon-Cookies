@@ -49,6 +49,23 @@ paris.sales();
 let lima = new StoreCreator('Lima', 2, 16, 4.6);
 lima.sales();
 
+let newStoreEl = document.getElementById('newStore-Form');
+
+newStoreEl.addEventListener('submit', function(event){
+  event.preventDefault();
+  console.log(event.target.store.value);
+  console.log(event.target.minCust.value);
+  console.log(event.target.maxCust.value);
+  console.log(event.target.avgSale.value);
+
+  let location = event.target.store.value;
+  let minCust = event.target.minCust.value;
+  let maxCust = event.target.maxCust.value;
+  let avgSales = event.target.avgSale.value;
+
+  new StoreCreator(location, minCust, maxCust, avgSales);
+});
+
 function render(store) { //creates hourly sale entries in html table for any store entered as argument
   let tableEl = document.getElementById('salesTable');
   let tableRowEl = document.createElement('tr');
