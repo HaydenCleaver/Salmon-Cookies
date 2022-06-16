@@ -10,6 +10,10 @@ Primarily worked on refactoring the code with constructors and using the DOM to 
 
 Also added the first touches of CSS and structure to the homepage and sales page.
 
+### Lab 08 Additions
+
+Only finished the bare minimum for this assignment's completion.  Added some structure and images to the homepage and aligned some of the elements so that they aren't just all over the place.  It's still a pretty big mess though, so I'll be revisting it tomorrow.
+
  Author: Hayden Cleaver
 
 ### Links and Resources
