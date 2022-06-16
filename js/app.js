@@ -32,22 +32,18 @@ function StoreCreator(location, minCust, maxCust, avgSale) { //creates store obj
   };
 
   listedStores.push(this); //appends objects created into listedStore array, which is used in footer() function for calculating totals
+  this.randomCustomers();
+  this.sales();
+  render(this);
 }
 
+header();
+
 let seattle = new StoreCreator('Seattle', 23, 65, 6.3);
-seattle.sales();
-
 let tokyo = new StoreCreator('Tokyo', 3, 24, 1.2);
-tokyo.sales();
-
 let dubai = new StoreCreator('Dubai', 11, 38, 3.7);
-dubai.sales();
-
 let paris = new StoreCreator('Paris', 20, 38, 2.3);
-paris.sales();
-
 let lima = new StoreCreator('Lima', 2, 16, 4.6);
-lima.sales();
 
 let newStoreEl = document.getElementById('newStore-Form');
 
@@ -59,11 +55,13 @@ newStoreEl.addEventListener('submit', function(event){
   console.log(event.target.avgSale.value);
 
   let location = event.target.store.value;
-  let minCust = event.target.minCust.value;
-  let maxCust = event.target.maxCust.value;
-  let avgSales = event.target.avgSale.value;
+  let minCust = parseInt(event.target.minCust.value);
+  let maxCust = parseInt(event.target.maxCust.value);
+  let avgSales = parseInt(event.target.avgSale.value);
 
   new StoreCreator(location, minCust, maxCust, avgSales);
+  remFooter();
+  footer();
 });
 
 function render(store) { //creates hourly sale entries in html table for any store entered as argument
@@ -75,7 +73,7 @@ function render(store) { //creates hourly sale entries in html table for any sto
   tableRowEl.appendChild(locationEl);
   locationEl.textContent = store.location;
 
-  for (let i = 0; i < store.storeSales.length; i++) {
+  for (let i = 0; i < listedStores[0].storeSales.length; i++) {
     let saleEl = document.createElement('td');
     tableRowEl.appendChild(saleEl);
     saleEl.textContent = store.storeSales[i];
@@ -111,6 +109,7 @@ function footer() {
 
   let tableEl = document.getElementById('salesTable');
   let tableRowEl = document.createElement('tr');
+  tableRowEl.setAttribute('id', 'total-row');
   let firstEl = document.createElement('th');
 
   tableEl.appendChild(tableRowEl);
@@ -137,12 +136,9 @@ function footer() {
   finalEl.textContent = finalTotals;
 }
 
-header();
-
-render(seattle);
-render(tokyo);
-render(dubai);
-render(paris);
-render(lima);
+function remFooter(){
+  let tableRowEl = document.getElementById('total-row');
+  tableRowEl.remove('tr');
+}
 
 footer();
