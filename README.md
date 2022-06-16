@@ -14,6 +14,10 @@ Also added the first touches of CSS and structure to the homepage and sales page
 
 Only finished the bare minimum for this assignment's completion.  Added some structure and images to the homepage and aligned some of the elements so that they aren't just all over the place.  It's still a pretty big mess though, so I'll be revisting it tomorrow.
 
+### Lab 09 Additions
+
+Implemented a user input form on the sales page.  Allows for the entry of new locations and data which are appended to the table above.
+
  Author: Hayden Cleaver
 
 ### Links and Resources
@@ -28,3 +32,5 @@ Only finished the bare minimum for this assignment's completion.  Added some str
 The real time sink for me was figuring out how to tally up the hourly totals for the final row, and how to get the combined totals.
 
 Messing with nested `for` loops still isn't my strongest skill.
+
+**Lab 09**: Took a little while to figure out how to rearrange my code to accomodate the new objects being added, as well as the totals.  I'm not particularly happy with the way I set it up.  I think I need to refactor my code to make a simpler solution to it.
