@@ -1,5 +1,5 @@
 body{
-    background-color: #637979;
+    background-color: #394242;
 }
 
 header{
@@ -32,16 +32,18 @@ h1{
 }
 
 h4{
-   text-align: center
+    justify-content: left;
+    text-align: left;
 }
+
 .half{
     background-color: rgb(4, 216, 216);
-    margin-left: 15%;
+    margin-left: 10%;
     margin-right: auto;
     justify-content: center;
     border: solid black 2px;
     top: 0;
-    width: 70%;
+    width: 80%;
     height: 100%;
     display: flex;
 
@@ -51,14 +53,30 @@ h4{
     margin-top: 20px;
     margin-bottom: 20px;
     height: 70%;
-    width: 70%;
+    width: 60%;
 }
 ol{
     border: solid black 2px;
     align-items: center;
     justify-content: center;
 }
+
+h3{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+    margin-bottom: 0px;
+    text-align: center;
+    background-color: rgb(4, 216, 216);
+    border: solid black 2px;
+    border-bottom: 0px;
+    
+}
 p{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 0px;
+    background-color: rgb(4, 216, 216);
     border: solid black
 }
 
@@ -86,6 +104,9 @@ footer{
     justify-content: center;
 }
 
+/* Sales CSS*/
+
+
 table{
     background-color: rgba(0, 2, 2, 0.692);
     border: solid black 2px;
@@ -102,3 +123,8 @@ td{
     color: #fcfcfc;
     border: solid black 2px;
 }
+
+form{
+    display:inline-block;
+}
+
