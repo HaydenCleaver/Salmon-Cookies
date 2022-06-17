@@ -4,7 +4,7 @@ const saleTime = ['6:00am ', '7:00am ', '8:00am ', '9:00am ', '10:00am ', '11:00
 const storeHours = 14;
 const listedStores = [];
 
-function StoreCreator(location, minCust, maxCust, avgSale) { //creates store objects 
+function StoreCreator(location, minCust, maxCust, avgSale) { //creates store objects
 
   this.location = location;
   this.minCust = minCust;
@@ -13,29 +13,29 @@ function StoreCreator(location, minCust, maxCust, avgSale) { //creates store obj
   this.storeSales = [];
   this.total = [];
 
-  this.randomCustomers = function () { //returns a random # of customers based upon min/max properties
-    let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
-    return customer;
-  };
-
-  this.sales = function () { //multiplies # of customers * average sale amount and appends them to an array along with total sales made
-    let hourlySales = [];
-    let totalSales = 0;
-
-    for (let i = 0; i < storeHours; i++) {
-      hourlySales.push(Math.round(this.randomCustomers() * this.avgSale));
-      totalSales += hourlySales[i];
-    }
-
-    this.total.push(totalSales);
-    return this.storeSales = hourlySales;
-  };
-
-  listedStores.push(this); //appends objects created into listedStore array, which is used in footer() function for calculating totals
-  this.randomCustomers();
+  this.customers();
   this.sales();
-  render(this);
+  listedStores.push(this); //appends objects created into listedStore array, which is used in footer() function for calculating totals
+  render(this); //automatically calls table creation function so that objects created from newStoreEl are run right away
 }
+
+StoreCreator.prototype.customers = function(){
+  let customer = Math.floor(Math.random() * (this.maxCust - this.minCust) + this.minCust);
+  return customer;
+};
+
+StoreCreator.prototype.sales = function(){
+  let hourlySales = [];
+  let totalSales = 0;
+
+  for (let i = 0; i < storeHours; i++) {
+    hourlySales.push(Math.round(this.customers() * this.avgSale));
+    totalSales += hourlySales[i];
+  }
+
+  this.total.push(totalSales);
+  return this.storeSales = hourlySales;
+};
 
 header();
 
@@ -47,12 +47,11 @@ let lima = new StoreCreator('Lima', 2, 16, 4.6);
 
 let newStoreEl = document.getElementById('newStore-Form');
 
-newStoreEl.addEventListener('submit', function(event){
+newStoreEl.addEventListener('submit', function(event){ 
+//takes input from html form and runs it through StoreCreator constructor to make an object;
+//also removes the footer() row and refreshes it with a new one.
+
   event.preventDefault();
-  console.log(event.target.store.value);
-  console.log(event.target.minCust.value);
-  console.log(event.target.maxCust.value);
-  console.log(event.target.avgSale.value);
 
   let location = event.target.store.value;
   let minCust = parseInt(event.target.minCust.value);
@@ -60,9 +59,29 @@ newStoreEl.addEventListener('submit', function(event){
   let avgSales = parseInt(event.target.avgSale.value);
 
   new StoreCreator(location, minCust, maxCust, avgSales);
+
   remFooter();
   footer();
 });
+
+function header() {
+  let tableEl = document.getElementById('salesTable');
+  let tableRowEl = document.createElement('tr');
+  let blankEl = document.createElement('th');
+
+  tableEl.appendChild(tableRowEl);
+  tableRowEl.appendChild(blankEl);
+
+  for (let i = 0; i < storeHours; i++) {
+    let hourEl = document.createElement('th');
+    tableRowEl.appendChild(hourEl);
+    hourEl.textContent = saleTime[i];
+  }
+
+  let finalEl = document.createElement('th');
+  tableRowEl.appendChild(finalEl);
+  finalEl.textContent = 'Daily Location Total';
+}
 
 function render(store) { //creates hourly sale entries in html table for any store entered as argument
   let tableEl = document.getElementById('salesTable');
@@ -84,32 +103,15 @@ function render(store) { //creates hourly sale entries in html table for any sto
   finalEl.textContent = store.total;
 }
 
-function header() {
-  let tableEl = document.getElementById('salesTable');
-  let tableRowEl = document.createElement('tr');
-  let blankEl = document.createElement('th');
-
-  tableEl.appendChild(tableRowEl);
-  tableRowEl.appendChild(blankEl);
-
-  for (let i = 0; i < storeHours; i++) {
-    let hourEl = document.createElement('th');
-    tableRowEl.appendChild(hourEl);
-    hourEl.textContent = saleTime[i];
-  }
-
-  let finalEl = document.createElement('th');
-  tableRowEl.appendChild(finalEl);
-  finalEl.textContent = 'Daily Location Total';
-}
-
-function footer() {
+function footer() { //computes and creates a totals row
   let hourlyTotals = 0;
   let finalTotals = 0;
 
   let tableEl = document.getElementById('salesTable');
   let tableRowEl = document.createElement('tr');
+
   tableRowEl.setAttribute('id', 'total-row');
+
   let firstEl = document.createElement('th');
 
   tableEl.appendChild(tableRowEl);
@@ -136,7 +138,7 @@ function footer() {
   finalEl.textContent = finalTotals;
 }
 
-function remFooter(){
+function remFooter(){ //removes row created by footer()
   let tableRowEl = document.getElementById('total-row');
   tableRowEl.remove('tr');
 }
