@@ -11,7 +11,7 @@ function StoreCreator(location, minCust, maxCust, avgSale) { //creates store obj
   this.maxCust = maxCust;
   this.avgSale = avgSale;
   this.storeSales = [];
-  this.total = [];
+  this.total = 0;
 
   this.customers();
   this.sales();
@@ -26,15 +26,12 @@ StoreCreator.prototype.customers = function(){
 
 StoreCreator.prototype.sales = function(){
   let hourlySales = [];
-  let totalSales = 0;
 
   for (let i = 0; i < storeHours; i++) {
     hourlySales.push(Math.round(this.customers() * this.avgSale));
-    totalSales += hourlySales[i];
+    this.total += hourlySales[i];
   }
-
-  this.total.push(totalSales);
-  return this.storeSales = hourlySales;
+  this.storeSales = hourlySales;
 };
 
 header();
@@ -92,7 +89,7 @@ function render(store) { //creates hourly sale entries in html table for any sto
   tableRowEl.appendChild(locationEl);
   locationEl.textContent = store.location;
 
-  for (let i = 0; i < listedStores[0].storeSales.length; i++) {
+  for (let i = 0; i < store.storeSales.length; i++) {
     let saleEl = document.createElement('td');
     tableRowEl.appendChild(saleEl);
     saleEl.textContent = store.storeSales[i];
